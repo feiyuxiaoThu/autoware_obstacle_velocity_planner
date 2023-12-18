@@ -43,8 +43,8 @@ int main() {
                                                 over_v_weight, over_a_weight, over_j_weight);
 
     SBoundaries s_boundary(N);
-    const double s_start = 9.9;
-    const double v_obj = 0.0;
+    const double s_start = 5.5;
+    const double v_obj = 8.0;
     const double s_max = 100; //s0 + v_max * (N-1) * dt;
     for(size_t i=0; i<N; ++i) {
         s_boundary.at(i).max_s = s_start;
@@ -58,10 +58,12 @@ int main() {
         s_boundary.at(i).is_object = false;
     }
 
+
     std::vector<double> s_safety_bound(N);
     for(size_t i=0; i<N; ++i) {
         s_safety_bound.at(i) = s_boundary.at(i).max_s;
     }
+
 
     VelocityOptimizer::OptimizationData data;
     data.N = N;
@@ -160,6 +162,7 @@ int main() {
     std::cout << "Finish Optimization" << std::endl;
 
     // Visualization
+    
     std::vector<double> max_vels(N, v_max);
     matplotlibcpp::figure_size(1500, 900);
     matplotlibcpp::subplot(2, 1, 1);
@@ -181,7 +184,9 @@ int main() {
     //matplotlibcpp::named_plot("l2_smoothed_jerk", query_positions, l2_smoothed_result.j);
     matplotlibcpp::title("Velocity");
     matplotlibcpp::legend();
+    //matplotlibcpp::savefig("minimal.pdf");
     matplotlibcpp::show();
+    
 
     return 0;
 }
